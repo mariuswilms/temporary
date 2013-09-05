@@ -1,0 +1,55 @@
+
+Temporary
+-- Manage temporary files and directories
+
+Synopsis
+--------
+n/a
+
+Usage
+-----
+<?php
+
+use temporary\Manager as Temporary;
+
+// Note: directory paths dependent on your
+// system's default temporary directory.
+
+Temporary::file();
+// returns /tmp/5228875718a8c
+
+Temporary::file(array('context' => 'transcode'));
+// returns /tmp/transcode_522886bf315ca
+
+Temporary::file(array('context' => 'transcode', 'extension' => 'mp4'));
+// returns /tmp/c_52288708bb5c6.mp4
+
+Temporary::file(array('preserve' => true));
+// returns /tmp/522887b919ca6
+
+// After shutdown the class will automatically cleanup any files
+// that have been created without the preserve option set to `true`.
+
+?>
+
+Copyright & License
+-------------------
+Temporary is Copyright (c) 2013 David Persson if not otherwise stated. The
+code is distributed under the terms of the BSD 3-clause License. For the
+full license text see the LICENSE file.
+
+Versions & Requirements
+-----------------------
+Temporary follows the rolling release development model. Code in the master
+branch should always considered to be stable. While code in the dev branch
+should be considered unstable or sometimes even expiremental.
+
+There are no versions as in the standard release development model but
+snapshots. The master branch may be tagged ("snapshotted") at any point in
+time when a significant point of development has been reached.
+
+Snapshots are schemed as follows:
+[current year, two digit].[index, zero based]
+
+PHP >=5.5.0 is required to run the code.
+
