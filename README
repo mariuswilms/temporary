@@ -10,6 +10,8 @@ Usage
 -----
 <?php
 
+require '/path/to/temporary/bootstrap.php';
+
 use temporary\Manager as Temporary;
 
 // Note: directory paths dependent on your
