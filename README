@@ -24,7 +24,7 @@ Temporary::file(array('context' => 'transcode'));
 // returns /tmp/transcode_522886bf315ca
 
 Temporary::file(array('context' => 'transcode', 'extension' => 'mp4'));
-// returns /tmp/c_52288708bb5c6.mp4
+// returns /tmp/transcode_52288708bb5c6.mp4
 
 Temporary::file(array('preserve' => true));
 // returns /tmp/522887b919ca6
