@@ -1,6 +1,6 @@
 
 Temporary
--- A small utility class to manage temporary files and directories.
+-- Small utility class to manage temporary files.
 
 Synopsis
 --------
