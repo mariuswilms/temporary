@@ -26,11 +26,11 @@ Temporary::file(array('context' => 'transcode'));
 Temporary::file(array('context' => 'transcode', 'extension' => 'mp4'));
 // returns /tmp/transcode_52288708bb5c6.mp4
 
-Temporary::file(array('preserve' => true));
+Temporary::file(array('clean' => false));
 // returns /tmp/522887b919ca6
 
 // After shutdown the class will automatically cleanup any files
-// that have been created without the preserve option set to `true`.
+// that have been created without the clean option set to `false`.
 
 ?>
 

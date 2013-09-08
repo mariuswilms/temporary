@@ -34,8 +34,8 @@ class Manager {
 
 	/**
 	 * Returns a path to a temporary file using the system's temporary directory.
-	 * File's at the returned path ar automatically cleaned up if the preserve
-	 * option is not set to `true`. No empty file is automatically being
+	 * File's at the returned path ar automatically cleaned up if the clean
+	 * option is *not* set to `false`. No empty file is automatically being
 	 * created at the returned path.
 	 *
 	 * @param array $options Possible options are:
@@ -43,12 +43,12 @@ class Manager {
 	 *                          temporary file; files are prefixed by the context given.
 	 *                       - `extension` Allows for appending an extension to
 	 *                         the file; by default all files are extension-less.
-	 *                       - `preserve` Allows for indicating that the file should
-	 *                         not be automatically be cleaned up.
+	 *                       - `clean` Allows for indicating that the file should
+	 *                         not be automatically be cleaned up; defaults to `true`.
 	 * @return string Absolute file path.
 	 */
 	public static function file(array $options = array()) {
-		$options += array('context' => null, 'extension' => null, 'preserve' => false);
+		$options += array('context' => null, 'extension' => null, 'clean' => true);
 
 		$directory = realpath(sys_get_temp_dir()) . '/';
 
@@ -61,7 +61,7 @@ class Manager {
 		if ($options['extension']) {
 			$file .= ".{$options['extension']}";
 		}
-		if (!$options['preserve']) {
+		if ($options['clean']) {
 			static::$_clean[] = $file;
 		}
 		return $file;
