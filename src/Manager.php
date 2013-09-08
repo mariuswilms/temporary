@@ -13,21 +13,21 @@ namespace temporary;
 class Manager {
 
 	/**
-	 * An array of paths to files created with file()
-	 * and later used by cleanUp().
+	 * An array of paths to files created with `Manager::file()`
+	 * and later used by `Manager::clean()`.
 	 *
 	 * @see Manager::file()
-	 * @see Manager::cleanUp()
+	 * @see Manager::clean()
 	 * @var array
 	 */
-	protected static $_files = array();
+	protected static $_clean = array();
 
 	/**
-	 * Used to determine if `Manager::cleanUp()` has been
+	 * Used to determine if `Manager::clean()` has been
 	 * registered as a shutdown function.
 	 *
 	 * @see Manager::register()
-	 * @see Manager::cleanUp()
+	 * @see Manager::clean()
 	 * @var boolean
 	 */
 	protected static $_registered = false;
@@ -61,20 +61,20 @@ class Manager {
 		if ($options['extension']) {
 			$file .= ".{$options['extension']}";
 		}
-		if ($options['preserve']) {
-			return $file;
+		if (!$options['preserve']) {
+			static::$_clean[] = $file;
 		}
-		return static::$_files[] = $file;
+		return $file;
 	}
 
 	/**
-	 * Registers `Manager::cleanUp()` as a shutdown function.
+	 * Registers `Manager::clean()` as a shutdown function.
 	 *
 	 * @return void
 	 */
 	public static function register() {
 		if (!static::$_registered) {
-			register_shutdown_function('\\temporary\\Manager::cleanUp');
+			register_shutdown_function('\\temporary\\Manager::clean');
 		}
 	}
 
@@ -83,8 +83,8 @@ class Manager {
 	 *
 	 * @return void
 	 */
-	public static function cleanUp() {
-		while ($file = array_pop(static::$_files)) {
+	public static function clean() {
+		while ($file = array_pop(static::$_clean)) {
 			if (file_exists($file)) {
 				unlink($file);
 			}
