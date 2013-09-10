@@ -20,7 +20,7 @@ class Manager {
 	 * @see Manager::clean()
 	 * @var array
 	 */
-	protected static $_clean = array();
+	protected static $_clean = [];
 
 	/**
 	 * Used to determine if `Manager::clean()` has been
@@ -47,8 +47,8 @@ class Manager {
 	 *                         not be automatically be cleaned up; defaults to `true`.
 	 * @return string Absolute file path.
 	 */
-	public static function file(array $options = array()) {
-		$options += array('context' => null, 'extension' => null, 'clean' => true);
+	public static function file(array $options = []) {
+		$options += ['context' => null, 'extension' => null, 'clean' => true];
 
 		$directory = realpath(sys_get_temp_dir()) . '/';
 

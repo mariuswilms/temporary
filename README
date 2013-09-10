@@ -20,13 +20,13 @@ use temporary\Manager as Temporary;
 Temporary::file();
 // returns /tmp/5228875718a8c
 
-Temporary::file(array('context' => 'transcode'));
+Temporary::file(['context' => 'transcode']);
 // returns /tmp/transcode_522886bf315ca
 
-Temporary::file(array('context' => 'transcode', 'extension' => 'mp4'));
+Temporary::file(['context' => 'transcode', 'extension' => 'mp4']);
 // returns /tmp/transcode_52288708bb5c6.mp4
 
-Temporary::file(array('clean' => false));
+Temporary::file(['clean' => false]);
 // returns /tmp/522887b919ca6
 
 // After shutdown the class will automatically cleanup any files
