@@ -1,0 +1,19 @@
+{
+    "name": "davidpersson/temporary",
+    "description": "Small PHP utility class to manage temporary files.",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "David Persson",
+            "email": "nperson@gmx.de"
+        }
+    ],
+    "require": {
+
+    },
+    "autoload": {
+      "psr-4": {
+        "temporary\\": "src/"
+      }
+    }
+}
