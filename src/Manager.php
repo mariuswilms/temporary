@@ -10,6 +10,8 @@
 
 namespace temporary;
 
+use RuntimeException;
+
 class Manager {
 
 	/**
@@ -45,10 +47,19 @@ class Manager {
 	 *                         the file; by default all files are extension-less.
 	 *                       - `clean` Allows for indicating that the file should
 	 *                         not be automatically be cleaned up; defaults to `true`.
+	 *                       - `key` Either a key generation function or a string to
+	 *                         use as the key. By default `uniqid()` will be used
+	 *                         to generate the key.
 	 * @return string Absolute file path.
 	 */
 	public static function file(array $options = []) {
-		$options += ['context' => null, 'extension' => null, 'clean' => true];
+		$options += [
+			'context' => null,
+			'key' => null,
+			'extension' => null,
+			'clean' => true,
+			'reuse' => false
+		];
 
 		$directory = realpath(sys_get_temp_dir()) . '/';
 
@@ -56,10 +67,23 @@ class Manager {
 		if ($options['context']) {
 			$prefix = "{$options['context']}_";
 		}
-		$file = $directory . uniqid($prefix);
+		if (is_callable($options['key'])) {
+			$file = $directory . $prefix . $options['key']();
+		} elseif ($options['key']) {
+			$file = $directory . $prefix . $options['key'];
+		} else {
+			$file = $directory . uniqid($prefix);
+		}
 
 		if ($options['extension']) {
 			$file .= ".{$options['extension']}";
+		}
+		if (file_exists($file)) {
+			if ($options['reuse']) {
+				return $file;
+			}
+			$message = "Temporary file `{$file}` already exists, make name unqiue or allow reuse.";
+			throw new RuntimeException($message);
 		}
 		if ($options['clean']) {
 			static::$_clean[] = $file;
