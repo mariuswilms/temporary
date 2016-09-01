@@ -50,7 +50,10 @@ class Manager {
 	public static function file(array $options = []) {
 		$options += ['context' => null, 'extension' => null, 'clean' => true];
 
-		$directory = realpath(sys_get_temp_dir()) . '/';
+		// Workaround sys_get_temp_dir() not respecting value of ini directive.
+		// Let directive be authoratitive.
+		$sys = ini_get('sys_temp_dir') ?: sys_get_temp_dir();
+		$directory = realpath($sys) . '/';
 
 		$prefix = null;
 		if ($options['context']) {
