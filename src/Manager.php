@@ -10,6 +10,8 @@
 
 namespace temporary;
 
+use RuntimeException;
+
 class Manager {
 
 	/**
@@ -45,7 +47,7 @@ class Manager {
 	 *                         the file; by default all files are extension-less.
 	 *                       - `clean` Allows for indicating that the file should
 	 *                         not be automatically be cleaned up; defaults to `true`.
-	 * @return string Absolute file path.
+	 * @return string|boolean Absolute file path.
 	 */
 	public static function file(array $options = []) {
 		$options += ['context' => null, 'extension' => null, 'clean' => true];
@@ -53,7 +55,12 @@ class Manager {
 		// Workaround sys_get_temp_dir() not respecting value of ini directive.
 		// Let directive be authoratitive.
 		$sys = ini_get('sys_temp_dir') ?: sys_get_temp_dir();
-		$directory = realpath($sys) . '/';
+
+		if (!$rSys = realpath($sys)) {
+			$message = "Failed to resolve path to system temporary directory `{$sys}`";
+			throw new RuntimeException($message);
+		}
+		$directory = realpath($rSys) . '/';
 
 		$prefix = null;
 		if ($options['context']) {
