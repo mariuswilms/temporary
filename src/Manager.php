@@ -59,7 +59,7 @@ class Manager {
 		if (!$rSys = realpath($sys)) {
 			$message  = "Failed to resolve path to system temporary directory `{$sys}`.";
 
-			if (!file_exists($sys) || !is_dir($sys) ) {
+			if (!file_exists($sys) || !is_dir($sys)) {
 				$message .= " Directory does not exist.";
 			}
 			throw new RuntimeException($message);
