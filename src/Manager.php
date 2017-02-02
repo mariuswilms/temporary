@@ -47,7 +47,7 @@ class Manager {
 	 *                         the file; by default all files are extension-less.
 	 *                       - `clean` Allows for indicating that the file should
 	 *                         not be automatically be cleaned up; defaults to `true`.
-	 * @return string|boolean Absolute file path.
+	 * @return string Absolute file path.
 	 */
 	public static function file(array $options = []) {
 		$options += ['context' => null, 'extension' => null, 'clean' => true];
@@ -57,7 +57,7 @@ class Manager {
 		$sys = ini_get('sys_temp_dir') ?: sys_get_temp_dir();
 
 		if (!$rSys = realpath($sys)) {
-			$message  = "Failed to resolve path to system temporary directory `{$sys}`.";
+			$message = "Failed to resolve path to system temporary directory `{$sys}`.";
 
 			if (!file_exists($sys) || !is_dir($sys)) {
 				$message .= " Directory does not exist.";
